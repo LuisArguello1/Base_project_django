@@ -77,3 +77,4 @@ Solo debes colocarel contenido del modal y el buttons de apretura de modal
 {% endblock %}
 
 {% include "components/button.html" with label="Abrir Modal" type="button" classes="btn-open-modal" icon="fa fa-window-restore" id="open_modal" %}
+
