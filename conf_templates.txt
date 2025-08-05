@@ -1,0 +1,79 @@
+1. BUTTONS
+Forma de usar buttons reutilizables en otros templates
+Buttons por defecto: crear, editar, detalles, eliminar, recargar, buscar
+{% include "components/button.html" with btn_type="crear" id="btn-crear" title="crear" %}
+{% include "components/button.html" with btn_type="editar" id="btn-editar" title="editar" %}
+{% include "components/button.html" with btn_type="detalles" id="btn-detalles" title="detalles" %}
+{% include "components/button.html" with btn_type="eliminar" id="btn-eliminar" title="eliminar" %}
+{% include "components/button.html" with btn_type="buscar" id="btn-buscar" title="buscar" %}
+
+Buttons Personalizados
+Ejemplo, puede cambiar los parametros
+{% include "components/button.html" with label="Guardar" type="submit" classes="btn-success" title="Guardar" icon="fa fa-save" %}
+
+2. Barra buscadora
+Forma de usar la barra reutilizable en otros templates
+{% include "components/searchbar.html" with action="/ruta/" name="q" placeholder="Buscar usuario..." id="buscador-usuarios" value=request.GET.busqueda %}
+
+3. breadcrumbs
+Forma de usar la barra reutilizable en otros templates
+En las vistas se pasa como contexto las urls necesarias
+Ejemplo:
+breadcrumb_list = [
+    {'label': 'Inicio', 'url': '/'},
+    {'label': 'Usuarios', 'url': '/usuarios/'},
+    {'label': 'Detalle', 'url': ''},  # El último no necesita URL
+]
+
+Y en el Html en el que se vaya a usar
+{% include "components/breadcrumbs.html" with breadcrumbs=breadcrumb_list %}
+
+4. Loading Component
+Forma de usar el componente de carga simplificado en cualquier parte de la aplicación
+
+a. Para formularios automáticos (el loading aparece al enviar el formulario):
+<form method="post" action="/ruta/" data-loading="true">
+    {% csrf_token %}
+    <!-- Contenido del formulario -->
+    <button type="submit">Enviar</button>
+</form>
+
+Atributos disponibles:
+- data-loading="true" - Activa el loading automático
+- data-loading-class="nombre-clase" - Añade una clase personalizada al loading
+- data-loading-theme="dark" - Aplica un tema (opciones: "dark", "mini")
+
+b. Usando JavaScript:
+<script>
+    // Mostrar loading
+    loading.show();
+    
+    // Mostrar loading con tema oscuro
+    loading.show({ theme: 'dark' });
+    
+    // Ocultar loading
+    loading.hide();
+</script>
+
+c. Loading en contenedor específico:
+<script>
+    // Mostrar loading en un div específico
+    const loadingId = loading.showInContainer('#mi-contenedor');
+    
+    // Ocultar loading
+    loading.hideFromContainer(loadingId);
+</script>
+
+5. modal
+Forma de usar modales reutilizables en otros templates
+
+Solo debes colocarel contenido del modal y el buttons de apretura de modal
+
+{% block header_modal %}
+    <p>Header del modal</p>
+{% endblock %}
+{% block content_modal %}
+    <p>Este es el contenido personalizado del modal.</p>
+{% endblock %}
+
+{% include "components/button.html" with label="Abrir Modal" type="button" classes="btn-open-modal" icon="fa fa-window-restore" id="open_modal" %}
